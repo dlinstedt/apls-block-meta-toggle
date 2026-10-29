@@ -142,6 +142,15 @@ final class Plugin {
             $js_version,
             true // Load in footer
         );
+
+        // Pass translatable strings to JS
+        wp_localize_script(
+            'block-meta-toggle-js',
+            'blockMetaToggleL10n',
+            [
+                'toggleMeta' => __( 'Toggle Meta', 'block-meta-toggle-wp' ),
+            ]
+        );
     }
 }
 
