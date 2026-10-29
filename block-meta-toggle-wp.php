@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name:       Gutenberg Meta Toggle
- * Plugin URI:        https://github.com/your-username/wp-gutenberg-meta-toggle
+ * Plugin Name:       Block Meta Toggle for WP
+ * Plugin URI:        https://github.com/dlinstedt/block-meta-toggle-wp
  * Description:       A lightweight, durable inline height toggle for WordPress Block Editor meta boxes. Keeps custom fields accessible without cluttering the canvas.
  * Version:           1.0.0
  * Author:            Dan Linstedt
  * Author URI:        https://aplusplugins.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       gutenberg-meta-toggle
+ * Text Domain:       block-meta-toggle-wp
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
