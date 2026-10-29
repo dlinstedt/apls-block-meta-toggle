@@ -1,5 +1,5 @@
 /**
- * Block Meta Toggle for WP - Production JavaScript Engine
+ * APLS Block Meta Toggle - Production JavaScript Engine
  */
 (function() {
     'use strict';
@@ -8,14 +8,14 @@
         var topToolbar = document.querySelector('.edit-post-header__settings') || 
                          document.querySelector('.interface-pinned-items');
 
-        // Prevent duplicate insertion
-        if (!topToolbar || document.getElementById('block-meta-toggle-btn')) {
+        // Prevent duplicate insertion using the updated ID
+        if (!topToolbar || document.getElementById('apls-block-meta-toggle-btn')) {
             return;
         }
 
         // Mount container for React component
         var mountPoint = document.createElement('div');
-        mountPoint.className = 'block-meta-toggle-wrapper';
+        mountPoint.className = 'apls-block-meta-toggle-wrapper';
         topToolbar.insertBefore(mountPoint, topToolbar.firstChild);
 
         var el = window.wp.element.createElement;
@@ -35,7 +35,7 @@
                     'button',
                     {
                         type: 'button',
-                        id: 'block-meta-toggle-btn',
+                        id: 'apls-block-meta-toggle-btn',
                         'aria-label': buttonLabel,
                         onClick: function(e) {
                             e.preventDefault();
@@ -47,8 +47,9 @@
                                 return;
                             }
 
-                            var isExpanded = targetWrapper.classList.toggle('block-meta-expanded-view');
-                            document.body.classList.toggle('block-meta-panel-expanded', isExpanded);
+                            // Toggle prefixed CSS state classes
+                            var isExpanded = targetWrapper.classList.toggle('apls-block-meta-expanded-view');
+                            document.body.classList.toggle('apls-block-meta-panel-expanded', isExpanded);
 
                             if (isExpanded) {
                                 // Auto-uncollapse hidden inner containers when expanding
