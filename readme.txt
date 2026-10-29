@@ -1,5 +1,6 @@
 === Block Meta Toggle for WP ===
 Contributors: dlinstedt
+Donate link: https://aplusplugins.com
 Tags: acf, meta box, block editor, custom fields, metabox
 Requires at least: 5.8
 Tested up to: 6.7
