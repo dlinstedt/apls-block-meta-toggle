@@ -21,17 +21,22 @@
         var el = window.wp.element.createElement;
         var Tooltip = window.wp.components.Tooltip;
 
+        // Retrieve localized text or fallback gracefully
+        var buttonLabel = (window.blockMetaToggleL10n && window.blockMetaToggleL10n.toggleMeta) 
+            ? window.blockMetaToggleL10n.toggleMeta 
+            : 'Toggle Meta';
+        
         // Render Native WordPress Tooltip & Button
         window.wp.element.render(
             el(
                 Tooltip,
-                { text: 'Toggle Meta' },
+                { text: buttonLabel },
                 el(
                     'button',
                     {
                         type: 'button',
                         id: 'block-meta-toggle-btn',
-                        'aria-label': 'Toggle Meta',
+                        'aria-label': buttonLabel,
                         onClick: function(e) {
                             e.preventDefault();
                             var poststuff = document.getElementById('poststuff');
