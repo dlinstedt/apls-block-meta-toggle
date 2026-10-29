@@ -71,19 +71,21 @@
                             }
                         }
                     },
-                    // Double Vertical Arrows SVG
+                    // Double Vertical Arrows SVG (Separated & Bold)
                     el('svg', {
                         width: 20,
                         height: 20,
                         viewBox: '0 0 24 24',
                         fill: 'none',
                         stroke: 'currentColor',
-                        strokeWidth: 2,
+                        strokeWidth: 2.5,
                         strokeLinecap: 'round',
                         strokeLinejoin: 'round'
                     },
-                        el('polyline', { points: '7 13 12 18 17 13' }),
-                        el('polyline', { points: '7 11 12 6 17 11' })
+                        // Top arrow pointing UP
+                        el('polyline', { points: '6 9 12 4 18 9' }),
+                        // Bottom arrow pointing DOWN
+                        el('polyline', { points: '6 15 12 20 18 15' })
                     )
                 )
             ),
