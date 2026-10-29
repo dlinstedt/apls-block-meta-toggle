@@ -57,11 +57,17 @@ final class Plugin {
 
     /**
      * Register hooks if not already initialized.
+     * Strict is_admin() guard ensures execution ONLY inside WordPress wp-admin.
      *
      * @return void
      */
     private function boot(): void {
         if ( $this->initialized ) {
+            return;
+        }
+
+        // Strict Admin Area Check: Prevent initialization on front-end requests entirely
+        if ( ! is_admin() ) {
             return;
         }
 
@@ -79,10 +85,8 @@ final class Plugin {
     private function is_block_editor_screen(): bool {
         global $pagenow;
 
-        // Primary Check: Verify post editing screens via URL context
-        $is_post_edit_page = in_array( $pagenow, [ 'post.php', 'post-new.php' ], true );
-        
-        if ( ! $is_post_edit_page ) {
+        // Verify we are strictly in wp-admin and editing a post or post-new page
+        if ( ! is_admin() || ! in_array( $pagenow, [ 'post.php', 'post-new.php' ], true ) ) {
             return false;
         }
 
@@ -94,7 +98,6 @@ final class Plugin {
             }
         }
 
-        // Default to true if $pagenow matches post edit screens and screen object is not yet populated
         return true;
     }
 
