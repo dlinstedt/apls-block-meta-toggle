@@ -2,6 +2,12 @@
  * Block Meta Toggle for WP - Production Stylesheet
  */
 
+/* Mount Wrapper Container */
+.block-meta-toggle-wrapper {
+    display: inline-flex;
+    align-items: center;
+}
+
 /* Top Toolbar Gear Toggle Button */
 #block-meta-toggle-btn {
     background: transparent;
@@ -37,32 +43,6 @@ body.block-meta-panel-expanded #block-meta-toggle-btn::before {
     height: 7px;
     background-color: #2271b1;
     border-radius: 50%;
-}
-
-/* Tooltip (Positioned ABOVE button to prevent sidebar overlay clipping) */
-#block-meta-toggle-btn::after {
-    content: "Toggle Meta";
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 6px; /* Offset above icon */
-    background: #1e1e1e;
-    color: #ffffff;
-    padding: 4px 8px;
-    font-size: 11px;
-    border-radius: 2px;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.15s ease;
-    z-index: 9999999 !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-#block-meta-toggle-btn:hover::after {
-    opacity: 1;
 }
 
 /* MINIMIZED STATE: Drag bar retained at standard 32px height, fields clipped */
