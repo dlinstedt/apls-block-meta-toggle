@@ -21,9 +21,9 @@
         var el = window.wp.element.createElement;
         var Tooltip = window.wp.components.Tooltip;
 
-        // Retrieve localized text or fallback gracefully
-        var buttonLabel = (window.blockMetaToggleL10n && window.blockMetaToggleL10n.toggleMeta) 
-            ? window.blockMetaToggleL10n.toggleMeta 
+        // Retrieve localized text from the prefixed window object or fallback gracefully
+        var buttonLabel = (window.aplsBlockMetaToggleL10n && window.aplsBlockMetaToggleL10n.toggleMeta) 
+            ? window.aplsBlockMetaToggleL10n.toggleMeta 
             : 'Toggle Meta';
 
         // Render Native WordPress Tooltip & Button
