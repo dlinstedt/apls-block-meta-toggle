@@ -11,180 +11,136 @@
  * Text Domain:       block-meta-toggle-wp
  */
 
+namespace APlusPlugins\BlockMetaToggle;
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
 }
 
-add_action( 'admin_head', function() {
-    $screen = get_current_screen();
-    if ( ! $screen || ! $screen->is_block_editor() ) {
-        return;
+/**
+ * Main Plugin Bootstrap Class
+ */
+final class Plugin {
+
+    /**
+     * Singleton instance container.
+     *
+     * @var Plugin|null
+     */
+    private static ?Plugin $instance = null;
+
+    /**
+     * Internal initialization flag to prevent duplicate execution loops.
+     *
+     * @var bool
+     */
+    private bool $initialized = false;
+
+    /**
+     * Main Entry Point / Singleton Loader.
+     * Guarantees single execution per request.
+     *
+     * @return Plugin
+     */
+    public static function init(): Plugin {
+        if ( null === self::$instance ) {
+            self::$instance = new self();
+            self::$instance->boot();
+        }
+        return self::$instance;
     }
-    ?>
-    <style id="acf-height-toggle-css">
-        /* Top Toolbar Gear Toggle Button */
-        #acf-meta-toggle-btn {
-            background: transparent;
-            color: #1e1e1e;
-            border: none;
-            padding: 6px;
-            border-radius: 2px;
-            cursor: pointer;
-            margin-right: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            position: relative;
-            box-sizing: border-box;
-            transition: background 0.15s ease, color 0.15s ease;
-        }
-        #acf-meta-toggle-btn:hover,
-        body.acf-panel-expanded #acf-meta-toggle-btn {
-            background: #f0f0f0;
-            color: #2271b1;
+
+    /**
+     * Private constructor to enforce Singleton pattern.
+     */
+    private function __construct() {}
+
+    /**
+     * Register hooks if not already initialized.
+     *
+     * @return void
+     */
+    private function boot(): void {
+        if ( $this->initialized ) {
+            return;
         }
 
-        /* Active indicator badge on gear icon when expanded */
-        body.acf-panel-expanded #acf-meta-toggle-btn::before {
-            content: "";
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            width: 7px;
-            height: 7px;
-            background-color: #2271b1;
-            border-radius: 50%;
-        }
+        $this->initialized = true;
 
-        /* Tooltip (High z-index to prevent sidebar clipping) */
-        #acf-meta-toggle-btn::after {
-            content: "Toggle Meta";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            margin-top: 6px;
-            background: #1e1e1e;
-            color: #ffffff;
-            padding: 4px 8px;
-            font-size: 11px;
-            border-radius: 2px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.15s ease;
-            z-index: 9999999 !important;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-        }
-        #acf-meta-toggle-btn:hover::after {
-            opacity: 1;
-        }
-
-        /* MINIMIZED STATE: Drag bar retained at standard 32px height, fields clipped */
-        .edit-post-meta-boxes-main:not(.acf-expanded-view) {
-            height: 32px !important;
-            min-height: 32px !important;
-            max-height: 32px !important;
-            overflow: hidden !important;
-            border-top: 1px solid #dcdcde !important;
-            transition: height 0.25s ease-in-out;
-        }
-
-        /* Ensure inner field container is hidden when minimized */
-        .edit-post-meta-boxes-main:not(.acf-expanded-view) .edit-post-layout__metaboxes {
-            display: none !important;
-        }
-
-        /* EXPANDED STATE: Full visible height in canvas flow */
-        .edit-post-meta-boxes-main.acf-expanded-view {
-            height: calc(100vh - 120px) !important;
-            max-height: none !important;
-            overflow-y: auto !important;
-            border-top: 2px solid #2271b1 !important;
-            background: #ffffff !important;
-            transition: height 0.25s ease-in-out;
-        }
-
-        .edit-post-meta-boxes-main.acf-expanded-view .edit-post-layout__metaboxes,
-        .edit-post-meta-boxes-main.acf-expanded-view .edit-post-meta-boxes-area {
-            height: auto !important;
-            max-height: none !important;
-            overflow: visible !important;
-            display: block !important;
-        }
-    </style>
-    <?php
-} );
-
-add_action( 'admin_footer', function() {
-    $screen = get_current_screen();
-    if ( ! $screen || ! $screen->is_block_editor() ) {
-        return;
+        add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_assets' ] );
     }
-    ?>
-    <script id="acf-height-toggle-js">
-    (function() {
-        function setupMetaHeightToggle() {
-            var topToolbar = document.querySelector('.edit-post-header__settings') || 
-                             document.querySelector('.interface-pinned-items');
 
-            // Skip if toolbar isn't ready or button already exists
-            if (!topToolbar || document.getElementById('acf-meta-toggle-btn')) {
-                return;
-            }
+    /**
+     * Robust Block Editor Environment Check.
+     * Combines $pagenow URL state with get_current_screen() fallback.
+     *
+     * @return bool
+     */
+    private function is_block_editor_screen(): bool {
+        global $pagenow;
 
-            // Create Toolbar Button unconditionally
-            var btn = document.createElement('button');
-            btn.type = 'button';
-            btn.id = 'acf-meta-toggle-btn';
-            btn.setAttribute('aria-label', 'Toggle Meta');
-            btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>';
-            
-            topToolbar.insertBefore(btn, topToolbar.firstChild);
-
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                var poststuff = document.getElementById('poststuff');
-                var mainWrapper = document.querySelector('.edit-post-meta-boxes-main');
-                var targetWrapper = mainWrapper || (poststuff ? poststuff.closest('.edit-post-meta-boxes-main') || poststuff : null);
-
-                if (!targetWrapper) {
-                    return;
-                }
-
-                var isExpanded = targetWrapper.classList.toggle('acf-expanded-view');
-                document.body.classList.toggle('acf-panel-expanded', isExpanded);
-
-                if (isExpanded) {
-                    // Auto-uncollapse hidden inner containers when expanding
-                    var collapsedLiners = targetWrapper.querySelectorAll('.edit-post-layout__metaboxes[hidden], [aria-expanded="false"]');
-                    collapsedLiners.forEach(function(el) {
-                        el.removeAttribute('hidden');
-                        if (el.getAttribute('aria-expanded') === 'false') {
-                            el.setAttribute('aria-expanded', 'true');
-                        }
-                    });
-
-                    targetWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                } else {
-                    // Minimize behavior: Scroll back up to the main editor canvas
-                    var editorCanvas = document.querySelector('.edit-post-visual-editor') || document.querySelector('.block-editor-writing-flow');
-                    if (editorCanvas) {
-                        editorCanvas.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                }
-            });
+        // Primary Check: Verify post editing screens via URL context
+        $is_post_edit_page = in_array( $pagenow, [ 'post.php', 'post-new.php' ], true );
+        
+        if ( ! $is_post_edit_page ) {
+            return false;
         }
 
-        var checkInterval = setInterval(function() {
-            if (document.querySelector('.edit-post-header__settings') || document.querySelector('.interface-pinned-items')) {
-                setupMetaHeightToggle();
-                clearInterval(checkInterval);
+        // Secondary Guard: Fallback check against WP_Screen object
+        if ( function_exists( 'get_current_screen' ) ) {
+            $screen = get_current_screen();
+            if ( $screen instanceof \WP_Screen ) {
+                return (bool) $screen->is_block_editor();
             }
-        }, 500);
-    })();
-    </script>
-    <?php
-} );
+        }
+
+        // Default to true if $pagenow matches post edit screens and screen object is not yet populated
+        return true;
+    }
+
+    /**
+     * Enqueue CSS and JS assets using standard WordPress registration APIs.
+     *
+     * @return void
+     */
+    public function enqueue_admin_assets(): void {
+        if ( ! $this->is_block_editor_screen() ) {
+            return;
+        }
+
+        $plugin_dir_path = plugin_dir_path( __FILE__ );
+        $plugin_dir_url  = plugin_dir_url( __FILE__ );
+
+        $css_file = 'assets/css/block-meta-toggle.css';
+        $js_file  = 'assets/js/block-meta-toggle.js';
+
+        // Cache Buster via File Modification Time
+        $css_version = file_exists( $plugin_dir_path . $css_file ) 
+            ? (string) filemtime( $plugin_dir_path . $css_file ) 
+            : '1.0.0';
+
+        $js_version = file_exists( $plugin_dir_path . $js_file ) 
+            ? (string) filemtime( $plugin_dir_path . $js_file ) 
+            : '1.0.0';
+
+        // Register and Enqueue Stylesheet
+        wp_enqueue_style(
+            'block-meta-toggle-css',
+            $plugin_dir_url . $css_file,
+            [],
+            $css_version
+        );
+
+        // Register and Enqueue JavaScript
+        wp_enqueue_script(
+            'block-meta-toggle-js',
+            $plugin_dir_url . $js_file,
+            [ 'wp-element', 'wp-components', 'wp-dom-ready' ],
+            $js_version,
+            true // Load in footer
+        );
+    }
+}
+
+// Bootstrap Plugin
+Plugin::init();
