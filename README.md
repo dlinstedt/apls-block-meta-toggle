@@ -1,50 +1,54 @@
-# Block Meta Toggle for WordPress (`block-meta-toggle-wp`)
+=== Block Meta Toggle for WP ===
+Contributors: Dan Linstedt
+Tags: acf, meta box, block editor, custom fields, metabox
+Requires at least: 5.8
+Tested up to: 6.7
+Requires PHP: 7.4
+Stable tag: 1.0.0
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-A lightweight, highly durable WordPress utility that adds an **Inline Height Toggle** to the Block Editor (Gutenberg) toolbar. It minimizes the footer meta box container (ACF, Rank Math, Yoast, custom metaboxes) to a clean 32px bar and lets you maximize it into a full-height editing viewport with a single click.
+A lightweight inline height toggle for Block Editor meta boxes. Keeps custom fields accessible without canvas clutter.
 
-Unlike other solutions that physically detach or move DOM elements into React modal portals—breaking event listeners and virtual DOM states—**Gutenberg Meta Toggle** operates purely through native CSS/JS height manipulation directly within the WordPress canvas flow.
+== Description ==
 
----
+Block Meta Toggle for WP is a lightweight utility that adds an **Inline Height Toggle** button to the main editor toolbar. It minimizes the footer meta box container (ACF, Rank Math, Yoast, and custom metaboxes) down to a clean 32px bar and lets you expand it into a full-height editing panel with a single click.
 
-## Key Features
+Unlike other solutions that physically detach or move DOM elements into modal portals—breaking event listeners and virtual DOM states—this plugin operates purely through native CSS and JavaScript height manipulation directly within the canvas flow.
 
-* **Zero DOM Relocation:** Keeps `#poststuff` and all meta fields in their native DOM location. Fully preserves ACF repeater fields, Select2 dropdowns, color pickers, and third-party JS listeners.
-* **100% Core Save Compatible:** No hijacked submission handlers or broken auto-save states. Standard WordPress Update/Publish buttons handle all data seamlessly.
-* **Inline Canvas Viewport:** Expands native meta boxes smoothly over the content editor while maintaining full visibility of top toolbars, left admin menus, and right sidebars.
+= Key Features =
+
+* **Zero DOM Relocation:** Keeps all meta fields in their native DOM location. Fully preserves ACF repeater fields, Select2 dropdowns, color pickers, and third-party JS listeners.
+* **Core Save Compatible:** No hijacked submission handlers or broken auto-save states. Standard editor Update/Publish buttons handle all data seamlessly.
+* **Inline Canvas Viewport:** Expands native meta boxes smoothly over the content area while maintaining full visibility of top toolbars, left admin menus, and right sidebars.
 * **Auto-Expand Collapsed Panels:** Automatically uncollapses hidden or aria-collapsed field liners when maximized.
-* **Lightweight & Clean:** Single-file architecture with zero database settings or admin clutter.
+* **Lightweight & Clean:** Single-file architecture with zero database clutter or unnecessary settings pages.
 
----
+== Installation ==
 
-## Installation
+1. Upload the `block-meta-toggle-wp` folder to your `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in the admin dashboard.
+3. Alternatively, place `block-meta-toggle-wp.php` in your `/wp-content/mu-plugins/` folder for automatic activation.
 
-### As a Standard Plugin
-1. Download or clone this repository.
-2. Zip the folder or upload `gutenberg-meta-toggle.php` to your site's `/wp-content/plugins/` directory.
-3. Activate **Gutenberg Meta Toggle** via **Plugins > Installed Plugins** in the WordPress admin.
+== Frequently Asked Questions ==
 
-### As an MU-Plugin (Recommended for Agencies)
-Drop `gutenberg-meta-toggle.php` directly into `/wp-content/mu-plugins/`. It will activate automatically across all post types in the Block Editor without cluttering the main plugins list.
+= Does this work with Advanced Custom Fields (ACF)? =
+Yes. It was specifically built to handle ACF fields smoothly without breaking repeater fields, color pickers, or field dependencies.
 
----
+= Does it alter how post data is saved? =
+No. It only controls CSS layout and visibility. Data is saved natively when you click the standard editor Update or Publish button.
 
-## How It Works
+== Screenshots ==
 
-1. On Block Editor load, the plugin injects a **Gear Icon** (`#acf-meta-toggle-btn`) into the top Gutenberg header settings bar.
-2. By default, the native `.edit-post-meta-boxes-main` container is locked to a clean 32px minimized bar at the bottom of the screen.
-3. Clicking **Toggle Meta** expands the container to fill the visible editor height (`calc(100vh - 120px)`) and smoothly scrolls it into view.
-4. Clicking **Toggle Meta** again minimizes the panel back to 32px and returns scroll focus smoothly to the main content canvas.
+1. The toggle button injected cleanly into the Block Editor top toolbar.
+2. Expanded full-height viewport displaying all custom meta fields.
 
----
+== Changelog ==
 
-## Requirements
+= 1.0.0 =
+* Initial public release.
 
-* **WordPress:** 5.8+ (Block Editor / Gutenberg)
-* **PHP:** 7.4 or 8.x
-* Compatible with Advanced Custom Fields (ACF), Rank Math, Yoast, and custom `add_meta_box()` calls.
+== Upgrade Notice ==
 
----
-
-## License
-
-GPL-2.0-or-later — Free for personal and commercial use.
+= 1.0.0 =
+Initial release of Block Meta Toggle for WP.
