@@ -4,7 +4,7 @@
  * Plugin URI:        https://github.com/dlinstedt/block-meta-toggle-wp
  * Description:       A lightweight, durable inline height toggle for Block Editor meta boxes. Keeps custom fields accessible without cluttering the canvas.
  * Version:           1.0.0
- * Author:            dlinstedt
+ * Author:            Dan Linstedt
  * Author URI:        https://aplusplugins.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
