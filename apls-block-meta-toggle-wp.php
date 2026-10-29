@@ -1,17 +1,20 @@
 <?php
 /**
- * Plugin Name:       Block Meta Toggle for WP
- * Plugin URI:        https://github.com/dlinstedt/block-meta-toggle-wp
+ * Plugin Name:       APLS Block Meta Toggle
+ * Plugin URI:        https://github.com/dlinstedt/apls-block-meta-toggle
  * Description:       A lightweight, durable inline height toggle for Block Editor meta boxes. Keeps custom fields accessible without cluttering the canvas.
  * Version:           1.0.0
+ * Requires at least: 6.0
+ * Tested up to:      7.1
+ * Requires PHP:      7.4
  * Author:            Dan Linstedt
  * Author URI:        https://aplusplugins.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       block-meta-toggle-wp
+ * Text Domain:       apls-block-meta-toggle
  */
 
-namespace APlusPlugins\BlockMetaToggle;
+namespace APLS\BlockMetaToggle;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly.
@@ -114,8 +117,8 @@ final class Plugin {
         $plugin_dir_path = plugin_dir_path( __FILE__ );
         $plugin_dir_url  = plugin_dir_url( __FILE__ );
 
-        $css_file = 'assets/css/block-meta-toggle.css';
-        $js_file  = 'assets/js/block-meta-toggle.js';
+        $css_file = 'assets/css/apls-block-meta-toggle.css';
+        $js_file  = 'assets/js/apls-block-meta-toggle.js';
 
         // Cache Buster via File Modification Time
         $css_version = file_exists( $plugin_dir_path . $css_file ) 
@@ -128,7 +131,7 @@ final class Plugin {
 
         // Register and Enqueue Stylesheet
         wp_enqueue_style(
-            'block-meta-toggle-css',
+            'apls-block-meta-toggle-css',
             $plugin_dir_url . $css_file,
             [],
             $css_version
@@ -136,7 +139,7 @@ final class Plugin {
 
         // Register and Enqueue JavaScript
         wp_enqueue_script(
-            'block-meta-toggle-js',
+            'apls-block-meta-toggle-js',
             $plugin_dir_url . $js_file,
             [ 'wp-element', 'wp-components', 'wp-dom-ready' ],
             $js_version,
@@ -145,10 +148,10 @@ final class Plugin {
 
         // Pass translatable strings to JS
         wp_localize_script(
-            'block-meta-toggle-js',
-            'blockMetaToggleL10n',
+            'apls-block-meta-toggle-js',
+            'aplsBlockMetaToggleL10n',
             [
-                'toggleMeta' => __( 'Toggle Meta', 'block-meta-toggle-wp' ),
+                'toggleMeta' => __( 'Toggle Meta', 'apls-block-meta-toggle' ),
             ]
         );
     }
