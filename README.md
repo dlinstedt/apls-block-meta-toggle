@@ -1,4 +1,4 @@
-# Gutenberg Meta Toggle (`wp-gutenberg-meta-toggle`)
+# Block Meta Toggle for WordPress (`block-meta-toggle-wp`)
 
 A lightweight, highly durable WordPress utility that adds an **Inline Height Toggle** to the Block Editor (Gutenberg) toolbar. It minimizes the footer meta box container (ACF, Rank Math, Yoast, custom metaboxes) to a clean 32px bar and lets you maximize it into a full-height editing viewport with a single click.
 
