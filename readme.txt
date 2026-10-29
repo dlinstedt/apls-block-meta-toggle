@@ -1,9 +1,9 @@
-=== Block Meta Toggle for WP ===
+=== APLS Block Meta Toggle ===
 Contributors: dlinstedt
 Donate link: https://aplusplugins.com
 Tags: acf, meta box, block editor, custom fields, metabox
-Requires at least: 5.8
-Tested up to: 6.7
+Requires at least: 6.0
+Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv2 or later
@@ -13,7 +13,7 @@ A lightweight inline height toggle for Block Editor meta boxes. Keeps custom fie
 
 == Description ==
 
-Block Meta Toggle for WP is a lightweight utility that adds an **Inline Height Toggle** button to the main editor toolbar. It minimizes the footer meta box container (ACF, Rank Math, Yoast, and custom metaboxes) down to a clean 32px bar and lets you expand it into a full-height editing panel with a single click.
+APLS Block Meta Toggle is a lightweight utility that adds an **Inline Height Toggle** button to the main editor toolbar. It minimizes the footer meta box container (ACF, Rank Math, Yoast, and custom metaboxes) down to a clean 32px bar and lets you expand it into a full-height editing panel with a single click.
 
 Unlike other solutions that physically detach or move DOM elements into modal portals—breaking event listeners and virtual DOM states—this plugin operates purely through native CSS and JavaScript height manipulation directly within the canvas flow.
 
@@ -27,9 +27,9 @@ Unlike other solutions that physically detach or move DOM elements into modal po
 
 == Installation ==
 
-1. Upload the `block-meta-toggle-wp` folder to your `/wp-content/plugins/` directory.
+1. Upload the `apls-block-meta-toggle` folder to your `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in the admin dashboard.
-3. Alternatively, place `block-meta-toggle-wp.php` in your `/wp-content/mu-plugins/` folder for automatic activation.
+3. Alternatively, place `apls-block-meta-toggle.php` in your `/wp-content/mu-plugins/` folder for automatic activation.
 
 == Frequently Asked Questions ==
 
@@ -40,7 +40,7 @@ Yes. It was specifically built to handle ACF fields smoothly without breaking re
 No. It only controls CSS layout and visibility. Data is saved natively when you click the standard editor Update or Publish button.
 
 = Does it work with ALL meta boxes? =
-Yes.  Any meta boxes that show up in the meta box area below the content, still work without changes as designed.
+Yes. Any meta boxes that show up in the meta box area below the content still work without changes as designed.
 
 == Screenshots ==
 
@@ -55,4 +55,4 @@ Yes.  Any meta boxes that show up in the meta box area below the content, still 
 == Upgrade Notice ==
 
 = 1.0.0 =
-Initial release of Block Meta Toggle for WP.
+Initial release of APLS Block Meta Toggle.
