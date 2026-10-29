@@ -5,7 +5,7 @@
 
 A lightweight, highly durable WordPress utility that adds an **Inline Height Toggle** to the Block Editor toolbar. It minimizes the footer meta box container (ACF, Rank Math, Yoast, and custom metaboxes) down to a clean 32px bar and lets you expand it into a full-height editing viewport with a single click. It works for ANY meta boxes found at the bottom of your content editor.
 
-Unlike other solutions that physically detach or move DOM elements into React modal portals—breaking event listeners and virtual DOM states—**APLS Block Meta Toggle** operates purely through native CSS and JavaScript height manipulation directly within the WordPress canvas flow.
+Unlike other solutions that physically detach or move DOM elements into React modal portals - breaking event listeners and virtual DOM states - **APLS Block Meta Toggle** operates purely through native CSS and JavaScript height manipulation directly within the WordPress canvas flow.
 
 ---
 
