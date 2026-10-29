@@ -1,15 +1,15 @@
 /**
- * Block Meta Toggle for WP - Production Stylesheet
+ * APLS Block Meta Toggle - Production Stylesheet
  */
 
 /* Mount Wrapper Container */
-.block-meta-toggle-wrapper {
+.apls-block-meta-toggle-wrapper {
     display: inline-flex;
     align-items: center;
 }
 
-/* Top Toolbar Gear Toggle Button */
-#block-meta-toggle-btn {
+/* Top Toolbar Toggle Button */
+#apls-block-meta-toggle-btn {
     background: transparent;
     color: #1e1e1e;
     border: none;
@@ -27,14 +27,14 @@
     transition: background 0.15s ease, color 0.15s ease;
 }
 
-#block-meta-toggle-btn:hover,
-body.block-meta-panel-expanded #block-meta-toggle-btn {
+#apls-block-meta-toggle-btn:hover,
+body.apls-block-meta-panel-expanded #apls-block-meta-toggle-btn {
     background: #f0f0f0;
     color: #2271b1;
 }
 
-/* Active indicator badge on gear icon when expanded */
-body.block-meta-panel-expanded #block-meta-toggle-btn::before {
+/* Active indicator badge on icon when expanded */
+body.apls-block-meta-panel-expanded #apls-block-meta-toggle-btn::before {
     content: "";
     position: absolute;
     top: 6px;
@@ -46,7 +46,7 @@ body.block-meta-panel-expanded #block-meta-toggle-btn::before {
 }
 
 /* MINIMIZED STATE: Drag bar retained at standard 32px height, fields clipped */
-.edit-post-meta-boxes-main:not(.block-meta-expanded-view) {
+.edit-post-meta-boxes-main:not(.apls-block-meta-expanded-view) {
     height: 32px !important;
     min-height: 32px !important;
     max-height: 32px !important;
@@ -56,12 +56,12 @@ body.block-meta-panel-expanded #block-meta-toggle-btn::before {
 }
 
 /* Ensure inner field container is hidden when minimized */
-.edit-post-meta-boxes-main:not(.block-meta-expanded-view) .edit-post-layout__metaboxes {
+.edit-post-meta-boxes-main:not(.apls-block-meta-expanded-view) .edit-post-layout__metaboxes {
     display: none !important;
 }
 
 /* EXPANDED STATE: Full visible height in canvas flow */
-.edit-post-meta-boxes-main.block-meta-expanded-view {
+.edit-post-meta-boxes-main.apls-block-meta-expanded-view {
     height: calc(100vh - 120px) !important;
     max-height: none !important;
     overflow-y: auto !important;
@@ -70,8 +70,8 @@ body.block-meta-panel-expanded #block-meta-toggle-btn::before {
     transition: height 0.25s ease-in-out;
 }
 
-.edit-post-meta-boxes-main.block-meta-expanded-view .edit-post-layout__metaboxes,
-.edit-post-meta-boxes-main.block-meta-expanded-view .edit-post-meta-boxes-area {
+.edit-post-meta-boxes-main.apls-block-meta-expanded-view .edit-post-layout__metaboxes,
+.edit-post-meta-boxes-main.apls-block-meta-expanded-view .edit-post-meta-boxes-area {
     height: auto !important;
     max-height: none !important;
     overflow: visible !important;
