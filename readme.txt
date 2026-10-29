@@ -39,6 +39,9 @@ Yes. It was specifically built to handle ACF fields smoothly without breaking re
 = Does it alter how post data is saved? =
 No. It only controls CSS layout and visibility. Data is saved natively when you click the standard editor Update or Publish button.
 
+= Does it work with ALL meta boxes? =
+Yes.  Any meta boxes that show up in the meta box area below the content, still work without changes as designed.
+
 == Screenshots ==
 
 1. The toggle button injected cleanly into the Block Editor top toolbar.
