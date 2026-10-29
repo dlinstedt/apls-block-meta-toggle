@@ -2,9 +2,9 @@
 /**
  * Plugin Name:       Block Meta Toggle for WP
  * Plugin URI:        https://github.com/dlinstedt/block-meta-toggle-wp
- * Description:       A lightweight, durable inline height toggle for WordPress Block Editor meta boxes. Keeps custom fields accessible without cluttering the canvas.
+ * Description:       A lightweight, durable inline height toggle for Block Editor meta boxes. Keeps custom fields accessible without cluttering the canvas.
  * Version:           1.0.0
- * Author:            Dan Linstedt
+ * Author:            dlinstedt
  * Author URI:        https://aplusplugins.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -127,21 +127,15 @@ add_action( 'admin_footer', function() {
     <script id="acf-height-toggle-js">
     (function() {
         function setupMetaHeightToggle() {
-            var poststuff = document.getElementById('poststuff');
-            var mainWrapper = document.querySelector('.edit-post-meta-boxes-main');
             var topToolbar = document.querySelector('.edit-post-header__settings') || 
                              document.querySelector('.interface-pinned-items');
 
-            if (!poststuff || !topToolbar || document.getElementById('acf-meta-toggle-btn')) {
+            // Skip if toolbar isn't ready or button already exists
+            if (!topToolbar || document.getElementById('acf-meta-toggle-btn')) {
                 return;
             }
 
-            var hasBoxes = poststuff.querySelectorAll('.postbox').length > 0;
-            if (!hasBoxes) {
-                return;
-            }
-
-            // Create Toolbar Button
+            // Create Toolbar Button unconditionally
             var btn = document.createElement('button');
             btn.type = 'button';
             btn.id = 'acf-meta-toggle-btn';
@@ -152,7 +146,14 @@ add_action( 'admin_footer', function() {
 
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
-                var targetWrapper = mainWrapper || poststuff.closest('.edit-post-meta-boxes-main') || poststuff;
+                var poststuff = document.getElementById('poststuff');
+                var mainWrapper = document.querySelector('.edit-post-meta-boxes-main');
+                var targetWrapper = mainWrapper || (poststuff ? poststuff.closest('.edit-post-meta-boxes-main') || poststuff : null);
+
+                if (!targetWrapper) {
+                    return;
+                }
+
                 var isExpanded = targetWrapper.classList.toggle('acf-expanded-view');
                 document.body.classList.toggle('acf-panel-expanded', isExpanded);
 
@@ -168,7 +169,7 @@ add_action( 'admin_footer', function() {
 
                     targetWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 } else {
-                    // Minimize behavior: Scroll back up to the main block editor canvas
+                    // Minimize behavior: Scroll back up to the main editor canvas
                     var editorCanvas = document.querySelector('.edit-post-visual-editor') || document.querySelector('.block-editor-writing-flow');
                     if (editorCanvas) {
                         editorCanvas.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -178,8 +179,7 @@ add_action( 'admin_footer', function() {
         }
 
         var checkInterval = setInterval(function() {
-            if (document.getElementById('poststuff') && 
-               (document.querySelector('.edit-post-header__settings') || document.querySelector('.interface-pinned-items'))) {
+            if (document.querySelector('.edit-post-header__settings') || document.querySelector('.interface-pinned-items')) {
                 setupMetaHeightToggle();
                 clearInterval(checkInterval);
             }
